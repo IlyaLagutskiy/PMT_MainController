@@ -9,6 +9,7 @@
 #define CY8CMBR3XXX_H_
 
 #include "CY8CMBR3xxx_APIs.h"
+#include "Buttons.h"
 
 #define CY8CMBR3xxx_SlaveAddress 0x37
 

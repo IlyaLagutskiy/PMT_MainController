@@ -9,6 +9,9 @@
 #define SYSTEM_H_
 
 #include "main.h"
+#include "stm32f0xx_hal.h"
+
+extern uint32_t numberBuffer;
 
 #define CH1_Start 0
 #define CH2_Start 1
