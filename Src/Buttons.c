@@ -95,3 +95,43 @@ void TButton_15()
 {
 
 }
+
+void ButtonScan()
+{
+	if(HAL_GPIO_ReadPin(CH1_Start_GPIO_Port, CH1_Start_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(CH2_Start_GPIO_Port, CH2_Start_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(CH3_Start_GPIO_Port, CH3_Start_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(CH4_Start_GPIO_Port, CH4_Start_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(CH1_Select_GPIO_Port, CH1_Select_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(CH2_Select_GPIO_Port, CH2_Select_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(CH3_Select_GPIO_Port, CH3_Select_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(CH4_Select_GPIO_Port, CH4_Select_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+	if(HAL_GPIO_ReadPin(Calibrate_GPIO_Port, Calibrate_Pin) == GPIO_PIN_RESET)
+	{
+
+	}
+}
