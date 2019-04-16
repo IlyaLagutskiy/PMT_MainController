@@ -10,6 +10,7 @@
 void TButton_0()
 {
 	numberBuffer *= 10;
+	TButton_Callback(0);
 }
 
 void TButton_1()
@@ -116,22 +117,27 @@ void ButtonScan()
 	}
 	if(HAL_GPIO_ReadPin(CH1_Select_GPIO_Port, CH1_Select_Pin) == GPIO_PIN_RESET)
 	{
-
+		Channel_Select(CH1);
 	}
 	if(HAL_GPIO_ReadPin(CH2_Select_GPIO_Port, CH2_Select_Pin) == GPIO_PIN_RESET)
 	{
-
+		Channel_Select(CH2);
 	}
 	if(HAL_GPIO_ReadPin(CH3_Select_GPIO_Port, CH3_Select_Pin) == GPIO_PIN_RESET)
 	{
-
+		Channel_Select(CH3);
 	}
 	if(HAL_GPIO_ReadPin(CH4_Select_GPIO_Port, CH4_Select_Pin) == GPIO_PIN_RESET)
 	{
-
+		Channel_Select(CH4);
 	}
 	if(HAL_GPIO_ReadPin(Calibrate_GPIO_Port, Calibrate_Pin) == GPIO_PIN_RESET)
 	{
 
 	}
+}
+
+void TButton_Callback(uint8_t num)
+{
+
 }

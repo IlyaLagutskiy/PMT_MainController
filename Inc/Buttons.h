@@ -11,6 +11,7 @@
 #include "main.h"
 #include "System.h"
 #include "stm32f0xx_hal.h"
+#include "Channels.h"
 
 void TButton_0();
 void TButton_1();
@@ -28,5 +29,8 @@ void TButton_12();
 void TButton_13();
 void TButton_14();
 void TButton_15();
+void ButtonScan();
+void TButton_Callback(uint8_t num);
+
 
 #endif /* BUTTONS_H_ */

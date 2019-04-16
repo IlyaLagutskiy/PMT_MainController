@@ -70,6 +70,7 @@ I2C_HandleTypeDef hi2c2;
 SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim7;
 TIM_HandleTypeDef htim14;
 
 UART_HandleTypeDef huart1;
@@ -88,6 +89,7 @@ static void MX_I2C2_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_ADC_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM7_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -132,6 +134,7 @@ int main(void)
   MX_SPI1_Init();
   MX_ADC_Init();
   MX_TIM6_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -157,7 +160,7 @@ void SystemClock_Config(void)
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-  /**Initializes the CPU, AHB and APB busses clocks 
+  /** Initializes the CPU, AHB and APB busses clocks 
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
@@ -169,7 +172,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /**Initializes the CPU, AHB and APB busses clocks 
+  /** Initializes the CPU, AHB and APB busses clocks 
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1;
@@ -187,7 +190,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /**Enables the Clock Security System 
+  /** Enables the Clock Security System 
   */
   HAL_RCC_EnableCSS();
 }
@@ -209,7 +212,7 @@ static void MX_ADC_Init(void)
   /* USER CODE BEGIN ADC_Init 1 */
 
   /* USER CODE END ADC_Init 1 */
-  /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion) 
+  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion) 
   */
   hadc.Instance = ADC1;
   hadc.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
@@ -229,7 +232,7 @@ static void MX_ADC_Init(void)
   {
     Error_Handler();
   }
-  /**Configure for the selected ADC regular channel to be converted. 
+  /** Configure for the selected ADC regular channel to be converted. 
   */
   sConfig.Channel = ADC_CHANNEL_13;
   sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
@@ -272,13 +275,13 @@ static void MX_I2C2_Init(void)
   {
     Error_Handler();
   }
-  /**Configure Analogue filter 
+  /** Configure Analogue filter 
   */
   if (HAL_I2CEx_ConfigAnalogFilter(&hi2c2, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
   {
     Error_Handler();
   }
-  /**Configure Digital filter 
+  /** Configure Digital filter 
   */
   if (HAL_I2CEx_ConfigDigitalFilter(&hi2c2, 0) != HAL_OK)
   {
@@ -357,6 +360,36 @@ static void MX_TIM6_Init(void)
   /* USER CODE BEGIN TIM6_Init 2 */
 
   /* USER CODE END TIM6_Init 2 */
+
+}
+
+/**
+  * @brief TIM7 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM7_Init(void)
+{
+
+  /* USER CODE BEGIN TIM7_Init 0 */
+
+  /* USER CODE END TIM7_Init 0 */
+
+  /* USER CODE BEGIN TIM7_Init 1 */
+
+  /* USER CODE END TIM7_Init 1 */
+  htim7.Instance = TIM7;
+  htim7.Init.Prescaler = 999;
+  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim7.Init.Period = 47999;
+  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM7_Init 2 */
+
+  /* USER CODE END TIM7_Init 2 */
 
 }
 
@@ -451,7 +484,7 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
   /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 
 }
@@ -562,7 +595,7 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
 }
