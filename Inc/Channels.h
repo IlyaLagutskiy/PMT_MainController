@@ -27,11 +27,18 @@ typedef struct
 #define CH2 0x01
 #define CH3 0x02
 #define CH4 0x03
-#define ChannelState_ACTIVE 0xF0
-#define ChannelState_WAIT 0xF0
-#define ChannelState_COOLDOWN 0xF0
-#define ChannelState_ERROR 0xF0
-#define ChannelState_STOP 0xF0
+#define ChannelState_ACTIVE 0x00
+#define ChannelState_WAIT 0x10
+#define ChannelState_PAUSE 0x12
+#define ChannelState_ESTOP 0x13
+#define ChannelState_COOLDOWN 0x20
+#define ChannelState_ACFAIL 0xF0
+#define ChannelState_BUCKFAIL 0xF1
+#define ChannelState_INDTFAIL 0xF2
+#define ChannelState_PCBTFAIL 0xF3
+#define ChannelState_ERROR 0xFF
+#define Led_Red 0xF0
+#define Led_Green 0x00
 
 extern uint8_t selectedChannel;
 extern uint8_t CH_State[4];

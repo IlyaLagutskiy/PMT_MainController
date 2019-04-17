@@ -7,7 +7,7 @@
 
 #include "CY8CMBR3xxx.h"
 
-void CY8CMBR3xxx_CheckButton()
+void CY8CMBR3xxx_CheckButton() /*OK*/
 {
 	CY8CMBR3xxx_SENSORSTATUS buttons;
 	uint16_t buttonChange;
@@ -73,13 +73,13 @@ void CY8CMBR3xxx_CheckButton()
 	{
 		TButton_14();
 	}
-	if(ButtonExtract(buttonChange, 15))
-	{
-		TButton_15();
-	}
+//	if(ButtonExtract(buttonChange, 15))
+//	{
+//		TButton_15();
+//	}
 }
 
-uint8_t ButtonExtract(uint16_t buttons, uint8_t buttonNumber)
+uint8_t ButtonExtract(uint16_t buttons, uint8_t buttonNumber) /*OK*/
 {
 	buttons >>= buttonNumber;
 	buttons <<= 15;

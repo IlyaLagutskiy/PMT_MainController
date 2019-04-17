@@ -7,7 +7,7 @@
 
 #include "UART_Protocol.h"
 
-void UART_Send(uint8_t Address, uint8_t Command, uint8_t* Params, uint8_t ParamsLength)
+void UART_Send(uint8_t Address, uint8_t Command, uint8_t* Params, uint8_t ParamsLength) /*OK*/
 {
 	TxStruct message;
 	message.Address = Address;
@@ -21,7 +21,7 @@ void UART_Send(uint8_t Address, uint8_t Command, uint8_t* Params, uint8_t Params
 	}
 }
 
-void UART_Receive()
+void UART_Receive() /*OK*/
 {
 	StateData data = {0};
 	HAL_UART_Receive_IT(&huart1,(uint8_t*) &data, sizeof(data));

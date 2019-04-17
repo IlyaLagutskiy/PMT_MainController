@@ -14,7 +14,7 @@
       <advFilterWeight>ALP_FILTER_K_1_32</advFilterWeight>
       <buzzerDuration>1</buzzerDuration>
       <guardEnabled>false</guardEnabled>
-      <shieldEnabled>false</shieldEnabled>
+      <shieldEnabled>true</shieldEnabled>
       <fmeaEnabled>true</fmeaEnabled>
       <CSButtons>
         <Item>
@@ -294,7 +294,7 @@
           <proximityResolution>16</proximityResolution>
           <proximityPositiveThreshold>30</proximityPositiveThreshold>
           <proximityNegativeThreshold>30</proximityNegativeThreshold>
-          <enabled>true</enabled>
+          <enabled>false</enabled>
           <name>Button16</name>
           <pin>9</pin>
           <sensitivity>S_100fF</sensitivity>
@@ -321,7 +321,7 @@
       <gpoActiveState>false</gpoActiveState>
       <enableLedBrightness>false</enableLedBrightness>
       <pin0Function>INTERRUPT</pin0Function>
-      <pin1Function>CAPSENSE</pin1Function>
+      <pin1Function>SHIELD</pin1Function>
       <gpioHostControl>true</gpioHostControl>
       <timeout>10</timeout>
       <disableVreg>false</disableVreg>

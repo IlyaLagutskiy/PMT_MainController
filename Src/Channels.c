@@ -8,28 +8,46 @@
 #include "Channels.h"
 
 uint8_t selectedChannel = 0x10;
-uint8_t CH_State[4] = {0x00, 0x00, 0x00, 0x00};
-uint16_t CH_time[4] = {0x00, 0x00, 0x00, 0x00};
-ChannelData CH_data[4] = {0};
+uint8_t CH_State[4] =
+{ 0x00, 0x00, 0x00, 0x00 };
+uint16_t CH_time[4] =
+{ 0x00, 0x00, 0x00, 0x00 };
+ChannelData CH_data[4] =
+{ 0 };
 
-void Channel_Select(uint8_t channel)
+void Channel_Select(uint8_t channel) /**/
 {
 	selectedChannel = channel;
 	Display_ChangeActiveChannel();
 	Display_UpdateData();
 }
 
-void Channel_StartStop(uint8_t channel)
+void Channel_StartStop(uint8_t channel) /**/
 {
-	StartParams params = {0};
-	if(CH_State[channel] < 0xF0)
+	StartParams params =
+	{ 0 };
+	if (CH_State[channel] < 0xF0)
 	{
-		params.Amplitude = CH_data[selectedChannel].Amplitude;
-		params.Frequency = CH_data[selectedChannel].Frequency;
-		UART_Send(Channel_GetAddress(selectedChannel), Command_START, (uint8_t*) &params, 4);
-		Channel_GetState(selectedChannel);
-		Display_UpdateData();
-		CH_State[channel] = ChannelState_ACTIVE;
+		if (CH_State[channel] == ChannelState_WAIT)
+		{
+			params.Amplitude = CH_data[selectedChannel].Amplitude;
+			params.Frequency = CH_data[selectedChannel].Frequency;
+			UART_Send(Channel_GetAddress(selectedChannel), Command_START,
+					(uint8_t*) &params, 4);
+			HAL_Delay(100);
+			Channel_GetState(selectedChannel);
+			Display_UpdateData();
+			CH_State[channel] = ChannelState_ACTIVE;
+		}
+		if (CH_State[channel] == ChannelState_PAUSE)
+		{
+			UART_Send(Channel_GetAddress(selectedChannel), Command_RESUME, 0x00,
+					0);
+			HAL_Delay(100);
+			Channel_GetState(selectedChannel);
+			Display_UpdateData();
+		}
+
 	}
 	else
 	{
@@ -38,33 +56,15 @@ void Channel_StartStop(uint8_t channel)
 
 }
 
-void Channel_ErrorHandler(uint8_t channel)
+void Channel_ErrorHandler(uint8_t channel) /**/
 {
-	if(channel == CH1)
-	{
-		HAL_GPIO_WritePin(CH1_State1_GPIO_Port, CH1_State1_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(CH1_State2_GPIO_Port, CH1_State2_Pin, GPIO_PIN_SET);
-	}
-	if(channel == CH2)
-	{
-		HAL_GPIO_WritePin(CH2_State1_GPIO_Port, CH2_State1_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(CH2_State2_GPIO_Port, CH2_State2_Pin, GPIO_PIN_SET);
-	}
-	if(channel == CH3)
-	{
-		HAL_GPIO_WritePin(CH3_State1_GPIO_Port, CH3_State1_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(CH3_State2_GPIO_Port, CH3_State2_Pin, GPIO_PIN_SET);
-	}
-	if(channel == CH4)
-	{
-		HAL_GPIO_WritePin(CH4_State1_GPIO_Port, CH4_State1_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(CH4_State2_GPIO_Port, CH4_State2_Pin, GPIO_PIN_SET);
-	}
+
+	Channel_LedActivate(channel, Led_Red);
 }
 
-uint8_t Channel_GetAddress(uint8_t channel)
+uint8_t Channel_GetAddress(uint8_t channel) /*OK*/
 {
-	switch(channel)
+	switch (channel)
 	{
 		case CH1:
 			return CH1_Addr;
@@ -78,8 +78,74 @@ uint8_t Channel_GetAddress(uint8_t channel)
 	return 0x00;
 }
 
-void Channel_GetState(uint8_t channel)
+void Channel_GetState(uint8_t channel) /**/
 {
 	UART_Send(Channel_GetAddress(channel), Command_STATE, 0x00, 0);
 	UART_Receive();
+}
+
+void Channel_LedActivate(uint8_t channel, uint8_t led) /*OK*/
+{
+	if (led == Led_Red)
+	{
+		if (channel == CH1)
+		{
+			HAL_GPIO_WritePin(CH1_State1_GPIO_Port, CH1_State1_Pin,
+					GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(CH1_State2_GPIO_Port, CH1_State2_Pin,
+					GPIO_PIN_SET);
+		}
+		if (channel == CH2)
+		{
+			HAL_GPIO_WritePin(CH2_State1_GPIO_Port, CH2_State1_Pin,
+					GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(CH2_State2_GPIO_Port, CH2_State2_Pin,
+					GPIO_PIN_SET);
+		}
+		if (channel == CH3)
+		{
+			HAL_GPIO_WritePin(CH3_State1_GPIO_Port, CH3_State1_Pin,
+					GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(CH3_State2_GPIO_Port, CH3_State2_Pin,
+					GPIO_PIN_SET);
+		}
+		if (channel == CH4)
+		{
+			HAL_GPIO_WritePin(CH4_State1_GPIO_Port, CH4_State1_Pin,
+					GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(CH4_State2_GPIO_Port, CH4_State2_Pin,
+					GPIO_PIN_SET);
+		}
+	}
+	if (led == Led_Green)
+	{
+		if (channel == CH1)
+		{
+			HAL_GPIO_WritePin(CH1_State1_GPIO_Port, CH1_State1_Pin,
+					GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CH1_State2_GPIO_Port, CH1_State2_Pin,
+					GPIO_PIN_RESET);
+		}
+		if (channel == CH2)
+		{
+			HAL_GPIO_WritePin(CH2_State1_GPIO_Port, CH2_State1_Pin,
+					GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CH2_State2_GPIO_Port, CH2_State2_Pin,
+					GPIO_PIN_RESET);
+		}
+		if (channel == CH3)
+		{
+			HAL_GPIO_WritePin(CH3_State1_GPIO_Port, CH3_State1_Pin,
+					GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CH3_State2_GPIO_Port, CH3_State2_Pin,
+					GPIO_PIN_RESET);
+		}
+		if (channel == CH4)
+		{
+			HAL_GPIO_WritePin(CH4_State1_GPIO_Port, CH4_State1_Pin,
+					GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CH4_State2_GPIO_Port, CH4_State2_Pin,
+					GPIO_PIN_RESET);
+		}
+	}
 }

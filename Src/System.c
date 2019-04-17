@@ -78,6 +78,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			HAL_GPIO_WritePin(CH3_EXTI_GPIO_Port, CH3_EXTI_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(CH4_EXTI_GPIO_Port, CH4_EXTI_Pin, GPIO_PIN_SET);
 			exti12 = 0xF0;
+			CH_State[0] = ChannelState_ESTOP;
+			CH_State[1] = ChannelState_ESTOP;
+			CH_State[2] = ChannelState_ESTOP;
+			CH_State[3] = ChannelState_ESTOP;
 		}
 		else
 		{
@@ -86,6 +90,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			HAL_GPIO_WritePin(CH3_EXTI_GPIO_Port, CH3_EXTI_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(CH4_EXTI_GPIO_Port, CH4_EXTI_Pin, GPIO_PIN_RESET);
 			exti12 = 0x00;
+			CH_State[0] = ChannelState_ACTIVE;
+			CH_State[1] = ChannelState_ACTIVE;
+			CH_State[2] = ChannelState_ACTIVE;
+			CH_State[3] = ChannelState_ACTIVE;
 		}
 	}
 }
